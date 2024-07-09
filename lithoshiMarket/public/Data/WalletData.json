@@ -1,0 +1,102 @@
+[
+  {
+    "ticker": "sbtc",
+    "overall_balance": "162000",
+    "available_balance": "162000",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 1453704000,
+    "vol_1d": 209970,
+    "min_listed_unit_price": 69.224
+  },
+  {
+    "ticker": "base",
+    "overall_balance": "30000000",
+    "available_balance": "30000000",
+    "transferrable_balance": "0.",
+    "image_url": null,
+    "marketcap": 234140000,
+    "vol_1d": 350000,
+    "min_listed_unit_price": 0.12216
+  },
+  {
+    "ticker": "taro",
+    "overall_balance": "35000",
+    "available_balance": "35000",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 268752000,
+    "vol_1d": 0,
+    "min_listed_unit_price": 12.216
+  },
+  {
+    "ticker": "rcsv",
+    "overall_balance": "10",
+    "available_balance": "10",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 24563322000,
+    "vol_1d": 0,
+    "min_listed_unit_price": 1169.682
+  },
+  {
+    "ticker": "oshb",
+    "overall_balance": "23",
+    "available_balance": "23",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 50395682,
+    "vol_1d": 0,
+    "min_listed_unit_price": 5598
+  },
+  {
+    "ticker": "sbtca",
+    "overall_balance": "162000",
+    "available_balance": "162000",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 1453704000,
+    "vol_1d": 209970,
+    "min_listed_unit_price": 69.224
+  },
+  {
+    "ticker": "base",
+    "overall_balance": "30000000",
+    "available_balance": "30000000",
+    "transferrable_balance": "0.",
+    "image_url": null,
+    "marketcap": 234140000,
+    "vol_1d": 350000,
+    "min_listed_unit_price": 0.12216
+  },
+  {
+    "ticker": "taro",
+    "overall_balance": "35000",
+    "available_balance": "35000",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 268752000,
+    "vol_1d": 0,
+    "min_listed_unit_price": 12.216
+  },
+  {
+    "ticker": "rcsv",
+    "overall_balance": "10",
+    "available_balance": "10",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 24563322000,
+    "vol_1d": 0,
+    "min_listed_unit_price": 1169.682
+  },
+  {
+    "ticker": "oshb",
+    "overall_balance": "23",
+    "available_balance": "23",
+    "transferrable_balance": "0.00",
+    "image_url": null,
+    "marketcap": 50395682,
+    "vol_1d": 0,
+    "min_listed_unit_price": 5598
+  }
+]
