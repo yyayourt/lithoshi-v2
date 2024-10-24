@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+//import React from "react";
 import share from "../../../assets/Watchlist/share.png";
 
 export default function ShareWatchListSM({ toggleSetShowShareWatchList, handleMyBRCButtonClick }) {

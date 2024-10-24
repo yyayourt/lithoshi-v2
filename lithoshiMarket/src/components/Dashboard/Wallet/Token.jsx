@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Pagination from "../../pagination.jsx"; // Ensure this path is correct
+import Pagination from "../../pagination.jsx";
+import SortableTable from "../../SortableTable.jsx"; // Assurez-vous que le chemin est correct
 
 const ITEMS_PER_PAGE = 5;
 
 function Token() {
     const [walletData, setWalletData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("/Data/WalletData.json"); // Relative path to public folder
+                const response = await axios.get("/Data/WalletData.json");
                 if (Array.isArray(response.data)) {
                     setWalletData(response.data);
                 } else {
@@ -25,51 +29,64 @@ function Token() {
         fetchData();
     }, []);
 
-    const totalPages = Math.ceil(walletData.length / ITEMS_PER_PAGE);
+    const handleRowClick = (token) => {
+        navigate(`/token/${token.id}`, { state: { token } });
+    };
+
+    const handleSort = (column) => {
+        let direction = "ascending";
+        if (sortConfig.key === column && sortConfig.direction === "ascending") {
+            direction = "descending";
+        }
+        setSortConfig({ key: column, direction });
+    };
+
+    const sortedData = React.useMemo(() => {
+        let sortableItems = [...walletData];
+        if (sortConfig.key) {
+            sortableItems.sort((a, b) => {
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                    return sortConfig.direction === "ascending" ? -1 : 1;
+                }
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                    return sortConfig.direction === "ascending" ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+        return sortableItems;
+    }, [walletData, sortConfig]);
+
+    const totalPages = Math.ceil(sortedData.length / ITEMS_PER_PAGE);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentPageData = walletData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const currentPageData = sortedData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    const columns = [
+        { key: "ticker", label: "Name", render: (value) => value.toUpperCase() },
+        { key: "overall_balance", label: "Position" },
+        { key: "min_listed_unit_price", label: "Price", render: (value) => `$${value.toFixed(3)}` },
+        {
+            key: "vol_1d",
+            label: "24h",
+            render: (value) => (
+                <span className={parseFloat(value) > 0 ? "text-green-500" : parseFloat(value) < 0 ? "text-red-500" : ""}>
+                    {parseFloat(value) !== 0 ? (parseFloat(value) / 10000).toFixed(1) + "%" : "0%"}
+                </span>
+            ),
+        },
+        { key: "available_balance", label: "Available" },
+        { key: "transferrable_balance", label: "Transferable" },
+        { key: "marketcap", label: "Marketcap", render: (value) => `${(value / 1e6).toFixed(2)}M` },
+    ];
 
     return (
         <div className="bg-[#1E1E1F] text-white p-4 rounded">
-            <table className="w-full">
-                <thead>
-                    <tr className="bg-[#151516]">
-                        <th className="text-left pl-10 py-2">Name</th>
-                        <th className="text-left">Position</th>
-                        <th className="text-left">Price</th>
-                        <th className="text-left pl-10 py-4">24h</th>
-                        <th className="text-left">Available</th>
-                        <th className="text-left">Transferable</th>
-                        <th className="text-left">Marketcap</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentPageData.length > 0 ? (
-                        currentPageData.map((item, index) => (
-                            <tr className="border-t border-t-[#151516]" key={index}>
-                                <td className="pl-10 py-4">{item.ticker.toUpperCase()}</td>
-                                <td>{item.overall_balance}</td>
-                                <td>${item.min_listed_unit_price.toFixed(3)}</td>
-                                <td className={`pl-10 py-4 ${parseFloat(item.vol_1d) > 0 ? "text-green-500" : parseFloat(item.vol_1d) < 0 ? "text-red-500" : ""}`}>
-                                    {parseFloat(item.vol_1d) !== 0 ? (parseFloat(item.vol_1d) / 10000).toFixed(1) + "%" : "0%"}
-                                </td>
-                                <td>{item.available_balance}</td>
-                                <td>{item.transferrable_balance}</td>
-                                <td>{(item.marketcap / 1e6).toFixed(2)}M</td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="7">Aucune donnée disponible</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+            <SortableTable data={currentPageData} columns={columns} onSort={handleSort} sortConfig={sortConfig} onRowClick={handleRowClick} />
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
     );

@@ -1,5 +1,5 @@
 import UnisatManager from "./UnisatManager";
-import logoUnisat from "../../assets/Sidebar/logo_unisat.svg";
+import logoUnisat from "../../assets/Sidebar/logoMeta.svg";
 
 // eslint-disable-next-line react/prop-types
 function Modal({ onClose }) {
@@ -13,14 +13,13 @@ function Modal({ onClose }) {
         <UnisatManager>
             {({ account, balance, tokens, connectWallet, disconnectWallet }) => (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50" onClick={handleBackgroundClick}>
-                    <div className="bg-[#1E1E1F] rounded-2xl p-6 w-96 shadow-md">
+                    <div className="bg-[#1E1E1F] rounded-2xl p-6 w-96 shadow-md w-[500px] h-[300px]">
                         <span className="flex flex-row-reverse text-gray-600 cursor-pointer text-xl" style={{ fontSize: "30px" }} onClick={onClose}>
                             &times;{" "}
                         </span>
-                        <h2 className="text-[30px] font-semibold pl-[20%]">Connect wallet</h2>
-                        <p>Connect your wallet to sign in</p>
-
-                        <div>
+                        <h2 className="text-[30px] font-semibold text-center">Connect wallet</h2>
+                        <p className="text-center mb-8">Connect your wallet to sign in</p>
+                        <div className="flex items-center justify-center">
                             {account ? (
                                 <div>
                                     <p>Connecté : {account}</p>
@@ -40,9 +39,12 @@ function Modal({ onClose }) {
                                     <button onClick={disconnectWallet}>Déconnecter le portefeuille</button>
                                 </div>
                             ) : (
-                                <button onClick={connectWallet}>
+                                <button onClick={connectWallet} className="flex items-center bg-[#563AFF] rounded-xl gap-3 w-[400px] h-[80px]">
                                     <img src={logoUnisat} alt="" />
-                                    Connecter le portefeuille Unisat
+                                    <span className="flex flex-col items-start">
+                                        <h3 className="font-semibold">unisat</h3>
+                                        Connecter le portefeuille Unisat
+                                    </span>
                                 </button>
                             )}
                         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 export default function ShareWatchListSMNext({ toggleSetShowShareWatchList, handleMyBRCButtonClick }) {
     const handleClosePopUp = (e) => {
         // Vérifie si l'élément cliqué est l'arrière-plan de la fenêtre pop-up
